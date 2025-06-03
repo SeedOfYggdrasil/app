@@ -1,0 +1,11 @@
+node_modules
+package-lock.json
+.env
+logs
+*.log
+.backups
+dist
+.templates
+.unused
+npm-debug.log*
+yarn.lock

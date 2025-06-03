@@ -1,0 +1,147 @@
+/* EditorPage.css */
+
+@import url('../css/fonts.css');
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background: var(--color-primary-bg);
+  color: var(--color-light-text-1);
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Poppins', sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.editor-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-primary-bg);
+  color: var(--color-light-text-1);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  flex-grow: 1;
+}
+
+.editor-page > .banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--navbar-height-desktop);
+  z-index: 1000;
+  background-color: var(--color-primary-bg);
+}
+
+.document-title-bar {
+  position: fixed;
+  top: var(--navbar-height-desktop);
+  left: 0;
+  width: 100%;
+  background-color: var(--color-dark-bg-5);
+  padding: 8px 5%;
+  box-sizing: border-box;
+  z-index: 999;
+  border-bottom: 1px solid var(--color-grey-dark-5);
+  height: var(--titlebar-height-desktop);
+  display: flex;
+  align-items: center;
+}
+
+.document-title-input-field {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: var(--color-light-text-2);
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 6px 2px;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+}
+.document-title-input-field:focus {
+
+}
+
+
+.editor-page > .content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  padding-top: calc(var(--navbar-height-desktop) + var(--titlebar-height-desktop) + 20px);
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.editor-page > .footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #080808;
+  padding: 0;
+  z-index: 900;
+}
+
+@media screen and (max-width: 768px) {
+  .editor-page > .banner {
+    height: var(--navbar-height-mobile);
+  }
+  .document-title-bar {
+    top: var(--navbar-height-mobile);
+    padding: 6px 3%;
+    height: var(--titlebar-height-mobile);
+  }
+  .document-title-input-field {
+    font-size: 1.1em;
+  }
+  .editor-page > .content {
+    padding-top: calc(var(--navbar-height-mobile) + var(--titlebar-height-mobile) + 15px);
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+   .editor-page > .banner {
+    height: var(--navbar-height-mobile);
+  }
+   .document-title-bar {
+    top: var(--navbar-height-mobile);
+    padding: 5px 10px;
+    height: var(--titlebar-height-mobile);
+  }
+  .document-title-input-field {
+    font-size: 1em;
+  }
+  .editor-page > .content {
+    padding-top: calc(var(--navbar-height-mobile) + var(--titlebar-height-mobile) + 15px);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+  }
+}

@@ -1,0 +1,148 @@
+/* Login.css */
+
+@media screen and (max-width: 600) {
+    .modal {
+        max-height:33%;
+        max-width: 90%;
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-backdrop-modal);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+.modal {
+    position: static;
+    background-color: rgba(0, 19, 27, 0.24);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid;
+    border-color: var(--color-accent-blue-1);
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 96, 160, 0.829);
+    animation: slideUp 0.5s ease-out;
+    color: var(--color-light-text-1);
+    max-width: 600px;
+    min-width:400px;
+    max-height: 350px;
+    min-height: 350px;
+    outline: none;
+}
+
+h2 {
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 5em;
+    font-weight: 300;
+    color: var(--color-light-text-1);
+}
+
+.modal input {
+    font-family: Roboto, Helvetica, sans-serif;
+    color: var(--color-light-text-1);
+    background: none;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid;
+    border-color: rgb(6, 221, 228);
+    font-size: 1.5em;
+    justify-content: center;
+    text-align: left;
+    margin: 5px;
+    padding: 2px;
+    width: 95%;
+}
+
+.modal input:focus {
+    background: var(--color-light-text-1);
+    color: var(--color-primary-bg);
+    border: none;
+}
+
+.btn-submit {
+    color: var(--color-btn-submit-text);
+    background: none;
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: var(--color-btn-submit-border);
+    margin: 10px;
+    margin-top: 5%;
+    padding: 10px;
+    font-size: 1.2em;
+    font-family: Roboto, Helvetica, sans-serif;
+    transition: color 0.3s ease, background 0.3s ease,
+        text-shadow 0.3s ease;
+}
+
+.btn-submit:hover,
+.btn-submit:focus {
+    color: var(--color-btn-submit-hover-text);
+    background-color: var(--color-btn-submit-hover-bg);
+    text-shadow: 0 0 10px var(--color-btn-submit-hover-shadow);
+}
+
+.login-socials {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.google,
+.fb {
+    padding: 0px;
+    margin: 0px;
+    width: 30%;
+    background: none;
+    border: none;
+    border-color: var(--color-light-text-1);
+}
+
+.error-message {
+    color: var(--color-accent-red);
+    font-size: 1em;
+    
+}
+
+.success-message {
+    color: rgb(9, 255, 0);
+    font-size: 1em;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,223 @@
+/* Editor.css */
+
+/* General Editor Container */
+.editor-container-tiptap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-dark-bg-1);
+  border: 1px solid var(--color-accent-blue-4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Menu Bar Styling */
+.editor-menu-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 10px;
+  background-color: var(--color-dark-bg-4);
+  border-bottom: 1px solid rgba(50, 200, 255, 0.4);
+  gap: 5px;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 5px;
+  border-right: 1px solid var(--color-grey-dark-4);
+}
+.toolbar-group:last-child {
+  border-right: none;
+}
+
+
+.menu-button {
+  background: transparent;
+  border: none;
+  color: var(--color-medium-text-1);
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+}
+
+.menu-button:hover {
+  background-color: var(--color-grey-dark-4);
+  color: var(--color-light-text-1);
+}
+
+.menu-button.is-active {
+  background-color: var(--color-accent-blue-4);
+  color: var(--color-accent-blue-3);
+}
+.menu-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toolbar-select {
+  background-color: var(--color-grey-dark-6);
+  color: var(--color-light-text-2);
+  border: 1px solid var(--color-grey-dark-1);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  outline: none;
+  cursor: pointer;
+  max-width: 150px;
+}
+.toolbar-select.font-size-select {
+    max-width: 80px;
+}
+
+
+.toolbar-select:hover {
+  border-color: var(--color-accent-blue-5);
+}
+
+.toolbar-color-picker {
+  width: 28px;
+  height: 28px;
+  border: none;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.toolbar-color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+.toolbar-color-picker::-webkit-color-swatch {
+  border: 1px solid var(--color-grey-dark-2);
+  border-radius: 3px;
+}
+.toolbar-color-picker::-moz-color-swatch {
+  border: 1px solid var(--color-grey-dark-2);
+  border-radius: 3px;
+}
+
+.toolbar-label {
+    color: var(--color-medium-text-1);
+    padding: 6px 2px 6px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.toolbar-label:hover {
+    color: var(--color-light-text-1);
+}
+
+
+/* TipTap Editor Content Area */
+.editor-content-area {
+  flex-grow: 1;
+  padding: 15px 20px;
+  overflow-y: auto;
+  color: var(--color-light-text-2);
+  line-height: 1.7;
+}
+
+/* Basic ProseMirror/TipTap styling (can be customized further) */
+.ProseMirror {
+  outline: none;
+  min-height: 150px;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-placeholder);
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3, .ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
+  color: var(--color-light-text-3);
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  line-height: 1.3;
+}
+.ProseMirror h1 { font-size: 2em; }
+.ProseMirror h2 { font-size: 1.75em; }
+.ProseMirror h3 { font-size: 1.5em; }
+
+.ProseMirror a {
+  color: var(--color-link);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ProseMirror code {
+  background-color: rgba(100, 100, 100, 0.2);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.ProseMirror pre {
+  background: var(--color-grey-dark-7);
+  color: var(--color-medium-text-1);
+  font-family: 'Roboto Mono', monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  white-space: pre-wrap;
+}
+.ProseMirror pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.9em;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid rgba(50, 200, 255, 0.5);
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1rem;
+  color: var(--color-medium-text-4);
+}
+
+.ProseMirror ul, .ProseMirror ol {
+  padding-left: 1.5rem;
+}
+
+.ProseMirror mark {
+  background-color: yellow;
+  color: inherit;
+}
+
+/* Responsive Toolbar */
+@media (max-width: 768px) {
+  .editor-menu-bar {
+    padding: 6px;
+    gap: 3px;
+  }
+  .toolbar-group {
+    padding: 0 3px;
+    gap: 2px;
+  }
+  .menu-button {
+    padding: 5px 6px;
+    font-size: 1em;
+  }
+  .toolbar-select {
+    padding: 5px 6px;
+    font-size: 0.8em;
+  }
+  .toolbar-select.font-size-select {
+    max-width: 70px;
+  }
+  .editor-content-area {
+    padding: 10px 15px;
+  }
+}

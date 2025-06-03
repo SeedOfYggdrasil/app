@@ -1,0 +1,9 @@
+{
+    "name": "noted",
+    "version": "3.0.0",
+    "scripts": {
+        "start": "cd client && npx vite build && npx vite preview --port 3000 & cd ../server && npm run start",
+        "deploy": "cd client && npx vite build && cd ../server && npm run start",
+        "init": "cd client && npm i && cd .. && cd server && npm i"
+    }
+}

@@ -1,0 +1,63 @@
+/* BtnMain.css */
+
+.btn-container {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    left: 0;
+    margin-top: 55vh;
+    background-color: rgba(51, 0, 56, 0.295);
+    border: 1px solid var(--color-btn-hero-border);
+    overflow: hidden;
+}
+
+.btn-hero {
+    font-family: Guild, Helvetica, Arial, sans-serif;
+    background-color: transparent;
+    color: var(--color-btn-hero-text);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-shadow: 
+        1px 1px 5px var(--color-btn-hero-shadow-1), 
+        0 0 10px var(--color-btn-hero-shadow-2), 
+        0px 0 20px var(--color-btn-hero-shadow-3), 
+        0px 2px 10px var(--color-btn-hero-shadow-4), 
+        0px -2px 2px var(--color-btn-hero-shadow-5), 
+        0 0 10px var(--color-btn-hero-shadow-6);
+    text-align: center;
+    justify-content: center;
+    font-size: 2.5em;
+    font-weight: 400;
+    min-width: 15%;
+    width: auto;
+    box-shadow: 0 2px 5px var(--color-primary-bg);
+    transition: color 0.3s ease, border 0.3s ease, border-color 0.3s ease, text-shadow 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-hero:hover,
+.btn-hero:focus {
+    color: var(--color-btn-hero-text-hover);
+    background-color: rgba(6, 8, 104, 0);
+    border: 0px solid;
+    text-shadow: 0 0 5px var(--color-light-text-1), 0 0 10px #b700ff, 0 0 10px var(--color-light-text-1);
+    box-shadow: 0 0 20px #7700ffab, 0 0 10px #a605ac8e;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+    .btn-hero {
+        width: auto;
+        min-width: 40%;
+        font-size: 2em;
+        display: inline;
+    }
+
+    .btn-container {
+        margin-top: 55vh;
+    }
+}

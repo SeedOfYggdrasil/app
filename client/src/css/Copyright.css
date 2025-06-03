@@ -1,0 +1,42 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-footer-bg);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 6px 0;
+    z-index: 950;
+    box-shadow: 0 -1px 4px rgba(50, 150, 200, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright {
+    width: auto;
+    max-width: 95%;
+    padding: 0 10px;
+    margin: 0;
+    opacity: 0.85;
+    text-align: center;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 300;
+    color: var(--color-medium-text-2);
+    font-size: 0.75rem;
+    line-height: 1.3;
+}
+
+.copyright p {
+    margin: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .footer {
+        padding: 5px 0;
+    }
+    .copyright {
+        font-size: 0.7rem;
+    }
+}

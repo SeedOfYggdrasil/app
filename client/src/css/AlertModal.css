@@ -1,0 +1,105 @@
+.alert-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-backdrop);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2500;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.alert-modal {
+  background-color: var(--color-dark-bg-3);
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+  color: var(--color-light-text-2);
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  animation: slideUpModal 0.4s ease-out;
+  border-top: 4px solid var(--color-border-default);
+  outline: none;
+}
+
+.alert-modal h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: var(--color-light-text-3);
+}
+
+.alert-modal p {
+  margin-bottom: 20px;
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+.alert-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.alert-modal .btn-close-alert,
+.alert-modal .btn-confirm {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent;
+  min-width: 100px;
+}
+
+.alert-modal .btn-close-alert {
+  background-color: var(--color-grey-dark-1);
+  color: var(--color-medium-text-1);
+  border-color: var(--color-grey-dark-2);
+}
+.alert-modal .btn-close-alert:hover {
+  background-color: var(--color-grey-dark-2);
+  border-color: var(--color-grey-dark-3);
+}
+
+.alert-modal .btn-confirm {
+  background-color: var(--color-accent-blue-2);
+  color: var(--color-primary-bg);
+}
+.alert-modal .btn-confirm:hover {
+  background-color: var(--color-accent-blue-3);
+}
+
+.alert-modal-success { border-top-color: var(--color-accent-green); }
+.alert-modal-success h2 { color: var(--color-accent-green); }
+
+.alert-modal-error { border-top-color: var(--color-accent-red); }
+.alert-modal-error h2 { color: var(--color-accent-red); }
+
+.alert-modal-info { border-top-color: var(--color-accent-blue-2); }
+.alert-modal-info h2 { color: var(--color-accent-blue-2); }
+
+.alert-modal-warning { border-top-color: var(--color-accent-yellow); }
+.alert-modal-warning h2 { color: var(--color-accent-yellow); }
+
+.alert-modal-loading p::after {
+  content: "...";
+  display: inline-block;
+  animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+  0%, 20% { content: "."; }
+  40% { content: ".."; }
+  60%, 100% { content: "..."; }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUpModal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

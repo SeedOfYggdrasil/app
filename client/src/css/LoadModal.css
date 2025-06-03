@@ -1,0 +1,140 @@
+.load-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-backdrop);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.load-modal {
+  background-color: var(--color-dark-bg-2);
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  color: var(--color-light-text-2);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUpModal 0.4s ease-out;
+  outline: none;
+}
+
+.load-modal h2 {
+  text-align: center;
+  color: var(--color-accent-blue-2);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+.load-modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.load-modal li {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--color-grey-dark-4);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.load-modal li:last-child {
+  border-bottom: none;
+}
+
+.load-modal li:hover {
+  background-color: var(--color-grey-dark-5);
+}
+
+.load-modal .doc-title {
+  flex-grow: 1;
+}
+.load-modal .doc-title:hover {
+  color: var(--color-accent-blue-3);
+}
+
+
+.load-modal .doc-date {
+  font-size: 0.8em;
+  color: var(--color-medium-text-3);
+  margin-left: 10px;
+}
+
+.load-modal .delete-doc-btn {
+  background-color: transparent;
+  color: var(--color-accent-red);
+  border: 1px solid var(--color-accent-red);
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-left: 15px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.load-modal .delete-doc-btn:hover {
+  background-color: var(--color-accent-red);
+  color: var(--color-dark-bg-2);
+}
+
+
+.load-modal .btn-close-modal {
+  background-color: var(--color-grey-dark-4);
+  color: var(--color-light-text-2);
+  border: 1px solid var(--color-grey-dark-2);
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 15px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.load-modal .btn-close-modal:hover {
+  background-color: var(--color-grey-dark-1);
+  border-color: #777;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .load-modal {
+    padding: 20px;
+  }
+  .load-modal h2 {
+    font-size: 1.5em;
+  }
+  .load-modal li {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+  .load-modal .delete-doc-btn {
+    padding: 4px 8px;
+    font-size: 0.75em;
+  }
+}

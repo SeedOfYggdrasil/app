@@ -1,0 +1,102 @@
+/* App.css */
+
+@import url('./fonts.css');
+
+:root {
+  /* Colors */
+  --color-primary-bg: #000;
+  --color-dark-bg-1: #0A0A0A; /* Editor container */
+  --color-dark-bg-2: #1a1a1a; /* Load modal */
+  --color-dark-bg-3: #1e1e1e; /* Alert modal, exported HTML */
+  --color-dark-bg-4: #181818; /* Editor menu bar */
+  --color-dark-bg-5: #101010; /* Document title bar */
+  --color-backdrop: rgba(0, 0, 0, 0.6);
+  --color-backdrop-modal: rgba(0, 19, 27, 0.24);
+
+  --color-light-text-1: #fff;
+  --color-light-text-2: #e0e0e0;
+  --color-light-text-3: #f0f0f0;
+  --color-medium-text-1: #ccc;
+  --color-medium-text-2: #b0b0b0;
+  --color-medium-text-3: #888;
+  --color-medium-text-4: #aaa;
+  --color-placeholder: #6c757d;
+
+  --color-accent-blue-1: rgb(0, 225, 255);
+  --color-accent-blue-2: rgba(50, 200, 255, 0.9);
+  --color-accent-blue-3: rgba(50, 200, 255, 1);
+  --color-accent-blue-4: rgba(50, 200, 255, 0.3);
+  --color-accent-blue-5: rgba(50, 200, 255, 0.7);
+  --color-accent-green: #51cf66;
+  --color-accent-red: #ff6b6b;
+  --color-accent-yellow: #fcc419;
+
+  --color-link: rgba(50, 200, 255, 1);
+  --color-btn-x: rgb(0, 255, 200);
+  --color-btn-x-border: rgb(7, 218, 255);
+  --color-btn-x-hover-text: rgb(255, 255, 255);
+  --color-btn-x-hover-bg: rgb(145, 0, 60);
+
+  --color-btn-hero-text: rgb(255, 190, 215);
+  --color-btn-hero-border: rgba(47, 0, 216, 0.438);
+  --color-btn-hero-text-hover: #ffffff73;
+  --color-btn-hero-shadow-1: rgba(0, 10, 56, 0.8);
+  --color-btn-hero-shadow-2: rgba(156, 174, 255, 0.8);
+  --color-btn-hero-shadow-3: rgba(255, 255, 255, 0.7);
+  --color-btn-hero-shadow-4: rgb(1, 74, 87);
+  --color-btn-hero-shadow-5: rgb(111, 0, 255);
+  --color-btn-hero-shadow-6: #000;
+
+  --color-btn-submit-text: rgb(0, 255, 255);
+  --color-btn-submit-border: rgb(0, 247, 255);
+  --color-btn-submit-hover-text: rgb(255, 255, 255);
+  --color-btn-submit-hover-bg: rgb(124, 0, 52);
+  --color-btn-submit-hover-shadow: rgba(255, 255, 255, 0.829);
+
+  --color-register-text: rgba(84, 255, 235, 0.781);
+  --color-register-btn: rgb(0, 162, 255);
+  --color-register-btn-hover: rgb(255, 0, 128);
+
+  /* Grey shades for modals and borders */
+  --color-grey-dark-1: #444;
+  --color-grey-dark-2: #555;
+  --color-grey-dark-3: #666;
+  --color-grey-dark-4: #333;
+  --color-grey-dark-5: #282828;
+  --color-grey-dark-6: #2c2c2c;
+  --color-grey-dark-7: #111;
+  --color-grey-dark-8: #2a2a2a;
+  --color-border-default: #555;
+  --color-footer-bg: rgba(10, 10, 10, 0.85);
+
+  /* Dimensions */
+  --navbar-height-desktop: 50px;
+  --navbar-height-mobile: 45px;
+  --titlebar-height-desktop: 45px;
+  --titlebar-height-mobile: 40px;
+}
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-primary-bg);
+  color: var(--color-light-text-2);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
