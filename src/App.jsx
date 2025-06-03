@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { auth } from './firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import LandingPage from './pages/LandingPage';
-import Dashboard from './pages/Dashboard';
 import EditorPage from './pages/EditorPage';
 import LoadingSpinner from './components/LoadingSpinner';
 

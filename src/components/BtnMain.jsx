@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const BtnMain = ({ onClick }) => {
   const [label, setLabel] = useState(
-    window.innerWidth < 600 ? 'Login' : 'Login to Dashboard'
+    window.innerWidth < 600 ? 'Login' : 'Login or Register'
   )
 
   useEffect(() => {

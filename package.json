@@ -1,9 +1,57 @@
 {
-    "name": "noted",
-    "version": "3.0.0",
-    "scripts": {
-        "start": "cd client && npx vite build && npx vite preview --port 3000 & cd ../server && npm run start",
-        "deploy": "cd client && npx vite build && cd ../server && npm run start",
-        "init": "cd client && npm i && cd .. && cd server && npm i"
-    }
+  "name": "noted",
+  "version": "4.0.0",
+  "author": "Alex Pariah",
+  "type": "module",
+  "scripts": {
+    "dev": "npx vite",
+    "deploy": "pnpm install && npx vite build"
+  },
+  "dependencies": {
+    "@tiptap/extension-color": "^2.12.0",
+    "@tiptap/extension-font-family": "^2.12.0",
+    "@tiptap/extension-highlight": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
+    "@tiptap/extension-placeholder": "^2.12.0",
+    "@tiptap/extension-text-align": "^2.12.0",
+    "@tiptap/extension-text-style": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "firebase": "^10.14.1",
+    "prop-types": "^15.8.1",
+    "quill": "^2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
+    "react-router": "^6.30.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.5.1",
+    "@vitejs/plugin-react-swc": "^3.10.1",
+    "eslint": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-react-refresh": "latest",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "vite": "^5.4.19"
+  },
+  "pnpm": {
+    "overrides": {
+      "glob": "^10.3.10",
+      "inflight": "^1.0.7",
+      "lodash.isequal": "4.5.0",
+      "rimraf": "^5.0.1"
+    },
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "postinstall-postinstall",
+      "protobufjs"
+    ]
+  }
 }

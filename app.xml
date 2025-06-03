@@ -1,0 +1,3217 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+src/
+  components/
+    AlertModal.jsx
+    Banner.jsx
+    BtnClose.jsx
+    BtnLogout.jsx
+    BtnMain.jsx
+    Copyright.jsx
+    Editor.jsx
+    LoadingSpinner.jsx
+    LoadModal.jsx
+    Login.jsx
+    MenuBar.jsx
+    ModalWrapper.jsx
+    Navbar.jsx
+    Redirect.jsx
+    Register.jsx
+  css/
+    AlertModal.css
+    App.css
+    Banner.css
+    BtnClose.css
+    BtnLogout.css
+    BtnMain.css
+    Copyright.css
+    Editor.css
+    EditorPage.css
+    fonts.css
+    LandingPage.css
+    LoadingSpinner.css
+    LoadModal.css
+    Login.css
+    Navbar.css
+    Register.css
+  pages/
+    EditorPage.jsx
+    LandingPage.jsx
+  App.jsx
+  firebaseConfig.js
+  main.jsx
+.gitignore
+index.html
+package.json
+README.md
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/AlertModal.jsx">
+import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
+import '../css/AlertModal.css';
+
+const AlertModal = ({ isVisible, title, message, type = 'info', onClose, onConfirm, confirmText }) => {
+  const modalRef = useRef(null);
+  const lastActiveElementRef = useRef(null);
+
+  useEffect(() => {
+    if (isVisible) {
+      lastActiveElementRef.current = document.activeElement;
+      // Timeout to ensure modal is rendered before focusing
+      setTimeout(() => {
+        if (modalRef.current) {
+          modalRef.current.focus();
+        }
+      }, 0);
+    } else {
+      if (lastActiveElementRef.current && lastActiveElementRef.current.focus) {
+        lastActiveElementRef.current.focus();
+      }
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape' && isVisible && onClose) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isVisible, onClose]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="alert-modal-backdrop">
+      <div
+        className={`alert-modal alert-modal-${type}`}
+        role={onConfirm ? "alertdialog" : "dialog"}
+        aria-modal="true"
+        aria-labelledby={title ? `alert-modal-title-${type}` : undefined}
+        tabIndex="-1"
+        ref={modalRef}
+      >
+        {title && <h2 id={`alert-modal-title-${type}`}>{title}</h2>}
+        <p>{message}</p>
+        <div className="alert-modal-actions">
+          {onConfirm && confirmText && (
+            <button className="btn-confirm" onClick={onConfirm}>
+              {confirmText}
+            </button>
+          )}
+          <button className="btn-close-alert" onClick={onClose}>
+            {onConfirm ? 'Cancel' : 'Close'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+AlertModal.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  title: PropTypes.string,
+  message: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['info', 'success', 'error', 'warning', 'loading']),
+  onClose: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
+  confirmText: PropTypes.string,
+};
+
+export default AlertModal;
+</file>
+
+<file path="src/components/Banner.jsx">
+import { } from 'react';
+import logo from '../assets/logo.png';
+import '../css/Banner.css';
+
+const Banner = () => {
+
+return (
+ <div className="banner-container">
+  <div className="grad-bar"></div>
+  <nav className="banner">
+    <img src={logo} alt="Noted" />
+    <div className="menu-toggle" id="mobile-menu">
+      <span className="bar"></span>
+      <span className="bar"></span>
+      <span className="bar"></span>
+    </div>
+    <ul className="nav no-search">
+      <li className="nav-item"><a href="#">Dashboard</a></li>
+      <li className="nav-item"><a href="#">Docs</a></li>
+      <li className="nav-item"><a href="#">API</a></li>
+      <li className="nav-item"><a href="#">Settings</a></li>
+      <li className="nav-item"><a href="#">Sign Out</a></li>
+    </ul>
+  </nav>
+  </div>
+ );
+};
+
+export default Banner;
+</file>
+
+<file path="src/components/BtnClose.jsx">
+// BtnClose.jsx
+
+import '../css/BtnClose.css'
+import PropTypes from 'prop-types'
+
+function BtnClose ({ onClick }) {
+  return (
+    <button className='btn-x' onClick={onClick}>
+      X
+    </button>
+  )
+}
+
+BtnClose.propTypes = {
+  onClick: PropTypes.func.isRequired
+}
+export default BtnClose
+</file>
+
+<file path="src/components/BtnLogout.jsx">
+import React from 'react';
+import { useNavigate } => 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
+import '../css/BtnLogout.css';
+
+const BtnLogout = () => {
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      navigate('/');
+    }
+  };
+
+  return (
+    <button className="btn-logout" onClick={handleLogout}>
+      Sign Out
+    </button>
+  );
+};
+
+export default BtnLogout;
+</file>
+
+<file path="src/components/BtnMain.jsx">
+import { useState, useEffect } from 'react'
+import '../css/BtnMain.css'
+import PropTypes from 'prop-types'
+
+const BtnMain = ({ onClick }) => {
+  const [label, setLabel] = useState(
+    window.innerWidth < 600 ? 'Login' : 'Login or Register'
+  )
+
+  useEffect(() => {
+    const handleResize = () => {
+      setLabel(window.innerWidth < 600 ? 'Login' : 'Login to Dashboard')
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return (
+    <button className='btn-hero' onClick={onClick}>
+      {label}
+    </button>
+  )
+}
+
+BtnMain.propTypes = {
+  onClick: PropTypes.func.isRequired
+}
+
+export default BtnMain
+</file>
+
+<file path="src/components/Copyright.jsx">
+// Copyright.jsx
+
+const Copyright = () => {
+    return (
+        <div className="footer">
+            <div className="copyright">
+                <p>Copyright © 2025 Alex Pariah </p>
+            </div>
+        </div>
+    );
+};
+
+export default Copyright;
+</file>
+
+<file path="src/components/Editor.jsx">
+// Editor.jsx
+
+import React, { forwardRef, useImperativeHandle } from 'react';
+import PropTypes from 'prop-types';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import TextStyle from '@tiptap/extension-text-style';
+import FontFamily from '@tiptap/extension-font-family';
+import Color from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight';
+import TextAlign from '@tiptap/extension-text-align';
+import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
+
+import MenuBar from './MenuBar';
+import '../css/Editor.css';
+
+// Custom FontSize extension
+const FontSize = FontFamily.extend({ // Re-using FontFamily as a base to store an attribute
+  name: 'fontSize',
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      fontSize: {
+        default: null,
+        parseHTML: element => element.style.fontSize.replace('px',''),
+        renderHTML: attributes => {
+          if (!attributes.fontSize) {
+            return {};
+          }
+          return { style: `font-size: ${attributes.fontSize}px` };
+        },
+      },
+    };
+  },
+  addCommands() {
+    return {
+      ...this.parent?.(),
+      setFontSize: (fontSize) => ({ commands }) => {
+        return commands.setMark(this.name, { fontSize });
+      },
+      unsetFontSize: () => ({ commands }) => { // Renamed from unsetFontFamily
+        return commands.unsetMark(this.name);
+      },
+    };
+  },
+});
+
+
+const Editor = forwardRef((props, ref) => {
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3, 4, 5, 6] },
+      }),
+      TextStyle, // Required for FontFamily, Color, and our custom FontSize
+      FontFamily,
+      FontSize, // Our custom extension for font size
+      Color,
+      Highlight.configure({ multicolor: true }),
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      Placeholder.configure({ placeholder: 'Start writing your masterpiece...' }),
+      Link.configure({
+        openOnClick: false, // We'll handle clicks or provide an edit UI if needed
+        autolink: true,
+      }),
+    ],
+    content: '', // Starts empty
+    editorProps: {
+      attributes: {
+        class: 'prose prose-invert focus:outline-none max-w-none leading-relaxed', // Tailwind classes can be used here if Tailwind is setup
+      },
+    },
+  });
+
+  useImperativeHandle(ref, () => ({
+    getContentHTML: () => editor?.getHTML() || '',
+    getContentJSON: () => editor?.getJSON() || {}, // TipTap's JSON format
+    setContent: (newContent, format = 'html') => {
+      if (editor) {
+        if (format === 'json' && typeof newContent === 'object') {
+            editor.commands.setContent(newContent, false);
+        } else if (typeof newContent === 'string') {
+            editor.commands.setContent(newContent, false);
+        } else {
+            editor.commands.clearContent(false); // Clear if invalid format
+        }
+      }
+    },
+    resetEditor: () => {
+      editor?.commands.clearContent();
+      editor?.commands.focus();
+    },
+    getInstance: () => editor, // Expose editor instance for more direct control if needed
+  }));
+
+  return (
+    <div className="editor-container-tiptap">
+      {editor && <MenuBar editor={editor} />}
+      <EditorContent editor={editor} className="editor-content-area"/>
+    </div>
+  );
+});
+
+Editor.propTypes = {
+  // Props if any needed from parent
+};
+Editor.displayName = 'Editor';
+
+export default Editor;
+</file>
+
+<file path="src/components/LoadingSpinner.jsx">
+import PropTypes from 'prop-types';
+import '../css/LoadingSpinner.css';
+
+const LoadingSpinner = ({ message }) => {
+  return (
+    <div className="loading-spinner-overlay">
+      <div className="loading-spinner-container">
+        <div className="spinner"></div>
+        {message && <p>{message}</p>}
+      </div>
+    </div>
+  );
+};
+
+LoadingSpinner.propTypes = {
+  message: PropTypes.string,
+};
+
+export default LoadingSpinner;
+</file>
+
+<file path="src/components/LoadModal.jsx">
+import PropTypes from 'prop-types';
+import '../css/LoadModal.css';
+
+const LoadModal = ({ isVisible, onClose, documents, onSelectDocument, onDeleteDocument }) => {
+  if (!isVisible) return null;
+
+  return (
+    <div className="load-modal-backdrop">
+      <div className="load-modal">
+        <h2>Load Document</h2>
+        {documents.length === 0 ? (
+          <p>No saved documents found.</p>
+        ) : (
+          <ul>
+            {documents.map((doc) => (
+              <li key={doc.id}>
+                <span className="doc-title" onClick={() => onSelectDocument(doc.data, doc.id, doc.data.title || "Untitled")}>
+                  {doc.data.title || "Untitled Document"}
+                  <small className="doc-date">
+                     ({doc.data.updatedAt ? new Date(doc.data.updatedAt.seconds * 1000).toLocaleDateString() : 'N/A'})
+                  </small>
+                </span>
+                <button className="delete-doc-btn" onClick={() => onDeleteDocument(doc.id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <button className="btn-close-modal" onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
+
+LoadModal.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  documents: PropTypes.array.isRequired,
+  onSelectDocument: PropTypes.func.isRequired,
+  onDeleteDocument: PropTypes.func.isRequired,
+};
+
+export default LoadModal;
+</file>
+
+<file path="src/components/Login.jsx">
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import '../css/Login.css'
+import '../css/LandingPage.css'
+import '../css/fonts.css'
+import '../css/Register.css'
+
+const Login = ({ closeModal, switchToRegister }) => {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleLogin = async e => {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    setLoading(true)
+
+    if (!email || !password) {
+      setError('Please enter both email and password.')
+      setLoading(false)
+      return
+    }
+
+    try {
+      const auth = getAuth()
+      await signInWithEmailAndPassword(auth, email, password)
+      setSuccess('Logged in successfully. Redirecting...')
+      navigate('/editor')
+      closeModal()     
+    } catch (firebaseError) {
+      console.error('Error during login:', firebaseError)
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      switch (firebaseError.code) {
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+          errorMessage = 'Incorrect email or password.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'The email address is not valid.';
+          break;
+        case 'auth/user-disabled':
+          errorMessage = 'Your account has been disabled.';
+          break;
+        case 'auth/too-many-requests':
+          errorMessage = 'Too many attempts. Please try again later.';
+          break;
+        default:
+          errorMessage = 'Login failed. Please check your credentials.';
+          break;
+      }
+      setError(errorMessage)
+      setLoading(false)
+    } finally {
+        setLoading(false)     
+    }
+  }
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        {error && <div className='error-message'>{error}</div>}
+        {success && <div className='success-message'>{success}</div>}
+        <div className='text-email'>
+          <input
+            type='email'
+            placeholder='Email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+        </div>
+        <div className='text-password'>
+          <input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </div>
+        <button type='submit' className='btn-submit' disabled={loading}>
+          {loading ? 'Loading...' : 'Submit'}
+        </button>
+      </form>
+      <div className='modal-footer'>
+        <p>
+          Don't have an account?{' '}
+          <button className='btn-register' onClick={switchToRegister}>
+            Register
+          </button>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+Login.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  switchToRegister: PropTypes.func.isRequired
+}
+
+export default Login
+</file>
+
+<file path="src/components/MenuBar.jsx">
+// MenyBar.jsx
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  FaBold, FaItalic, FaStrikethrough, FaCode, FaParagraph, FaHeading, FaListUl, FaListOl, FaQuoteLeft,
+  FaUndo, FaRedo, FaAlignLeft, FaAlignCenter, FaAlignRight, FaAlignJustify, FaHighlighter, FaPalette, FaFont, FaLink, FaUnlink
+} from 'react-icons/fa';
+import { LuHeading1, LuHeading2, LuHeading3, LuHeading4, LuHeading5, LuHeading6 } from "react-icons/lu";
+
+
+const MenuButton = ({ icon: Icon, onClick, isActive, title, disabled }) => (
+  <button
+    onClick={onClick}
+    className={`menu-button ${isActive ? 'is-active' : ''}`}
+    title={title}
+    disabled={disabled}
+  >
+    <Icon />
+  </button>
+);
+MenuButton.propTypes = {
+  icon: PropTypes.elementType.isRequired,
+  onClick: PropTypes.func.isRequired,
+  isActive: PropTypes.bool,
+  title: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+
+
+const MenuBar = ({ editor }) => {
+  if (!editor) {
+    return null;
+  }
+
+  const setLink = () => {
+    const previousUrl = editor.getAttributes('link').href;
+    const url = window.prompt('URL', previousUrl);
+    if (url === null) return; // User cancelled
+    if (url === '') { // User wants to remove link
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
+    }
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  };
+
+  const commonFontFamilies = [
+    'Inter', 'Arial', 'Helvetica', 'Georgia', 'Times New Roman', 'Courier New', 'Verdana', 'Poppins', 'Roboto', 'Noto Sans', 'Montserrat', 'Lato', 'Oswald', 'Raleway', 'Ubuntu', 'Rubik'
+  ];
+   const commonFontSizes = ['8px', '10px', '12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px', '60px', '72px'];
+
+
+  return (
+    <div className="editor-menu-bar">
+      <div className="toolbar-group">
+        <MenuButton icon={FaUndo} onClick={() => editor.chain().focus().undo().run()} title="Undo" disabled={!editor.can().undo()} />
+        <MenuButton icon={FaRedo} onClick={() => editor.chain().focus().redo().run()} title="Redo" disabled={!editor.can().redo()} />
+      </div>
+
+      <div className="toolbar-group">
+        <select
+            value={editor.getAttributes('textStyle').fontFamily || ''}
+            onChange={(e) => editor.chain().focus().setFontFamily(e.target.value).run()}
+            className="toolbar-select"
+            title="Font Family"
+        >
+            <option value="">Default Font</option>
+            {commonFontFamilies.map(font => <option key={font} value={font}>{font}</option>)}
+        </select>
+         <select
+            value={editor.getAttributes('textStyle').fontSize || '16px'} // Assuming default or grab if set
+            onChange={(e) => editor.chain().focus().setFontSize(e.target.value).run()}
+            className="toolbar-select font-size-select"
+            title="Font Size"
+          >
+            {commonFontSizes.map(size => <option key={size} value={size}>{size.replace('px', '')}</option>)}
+          </select>
+      </div>
+
+      <div className="toolbar-group">
+        <MenuButton icon={FaBold} onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive('bold')} title="Bold" />
+        <MenuButton icon={FaItalic} onClick={() => editor.chain().focus().toggleItalic().run()} isActive={editor.isActive('italic')} title="Italic" />
+        <MenuButton icon={FaStrikethrough} onClick={() => editor.chain().focus().toggleStrike().run()} isActive={editor.isActive('strike')} title="Strikethrough" />
+        <MenuButton icon={FaCode} onClick={() => editor.chain().focus().toggleCode().run()} isActive={editor.isActive('code')} title="Code" />
+        <MenuButton icon={FaHighlighter} onClick={() => editor.chain().focus().toggleHighlight().run()} isActive={editor.isActive('highlight')} title="Highlight"/>
+        <label htmlFor="text-color-picker" className="toolbar-label" title="Text Color">
+            <FaPalette />
+        </label>
+        <input
+          id="text-color-picker"
+          type="color"
+          onInput={(event) => editor.chain().focus().setColor(event.target.value).run()}
+          value={editor.getAttributes('textStyle').color || '#ffffff'}
+          className="toolbar-color-picker"
+        />
+      </div>
+      
+      <div className="toolbar-group">
+        <MenuButton icon={LuHeading1} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} isActive={editor.isActive('heading', { level: 1 })} title="Heading 1"/>
+        <MenuButton icon={LuHeading2} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} isActive={editor.isActive('heading', { level: 2 })} title="Heading 2"/>
+        <MenuButton icon={LuHeading3} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} isActive={editor.isActive('heading', { level: 3 })} title="Heading 3"/>
+        <MenuButton icon={FaParagraph} onClick={() => editor.chain().focus().setParagraph().run()} isActive={editor.isActive('paragraph')} title="Paragraph"/>
+      </div>
+
+      <div className="toolbar-group">
+        <MenuButton icon={FaListUl} onClick={() => editor.chain().focus().toggleBulletList().run()} isActive={editor.isActive('bulletList')} title="Bullet List"/>
+        <MenuButton icon={FaListOl} onClick={() => editor.chain().focus().toggleOrderedList().run()} isActive={editor.isActive('orderedList')} title="Ordered List"/>
+        <MenuButton icon={FaQuoteLeft} onClick={() => editor.chain().focus().toggleBlockquote().run()} isActive={editor.isActive('blockquote')} title="Blockquote"/>
+         <MenuButton icon={FaLink} onClick={setLink} isActive={editor.isActive('link')} title="Set Link" />
+        <MenuButton icon={FaUnlink} onClick={() => editor.chain().focus().unsetLink().run()} title="Unset Link" disabled={!editor.isActive('link')} />
+      </div>
+
+      <div className="toolbar-group">
+        <MenuButton icon={FaAlignLeft} onClick={() => editor.chain().focus().setTextAlign('left').run()} isActive={editor.isActive({ textAlign: 'left' })} title="Align Left"/>
+        <MenuButton icon={FaAlignCenter} onClick={() => editor.chain().focus().setTextAlign('center').run()} isActive={editor.isActive({ textAlign: 'center' })} title="Align Center"/>
+        <MenuButton icon={FaAlignRight} onClick={() => editor.chain().focus().setTextAlign('right').run()} isActive={editor.isActive({ textAlign: 'right' })} title="Align Right"/>
+        <MenuButton icon={FaAlignJustify} onClick={() => editor.chain().focus().setTextAlign('justify').run()} isActive={editor.isActive({ textAlign: 'justify' })} title="Align Justify"/>
+      </div>
+    </div>
+  );
+};
+
+MenuBar.propTypes = {
+  editor: PropTypes.object,
+};
+
+export default MenuBar;
+</file>
+
+<file path="src/components/ModalWrapper.jsx">
+import PropTypes from 'prop-types'
+import { useEffect, useRef } from 'react'
+import BtnClose from './BtnClose'
+import '../css/Login.css'
+import '../css/BtnClose.css'
+import '../css/LandingPage.css'
+import '../css/fonts.css'
+
+const ModalWrapper = ({ children, isVisible, toggleModal }) => {
+  const modalRef = useRef(null);
+  const lastActiveElementRef = useRef(null);
+
+  useEffect(() => {
+    if (isVisible) {
+      lastActiveElementRef.current = document.activeElement;
+      setTimeout(() => {
+        if (modalRef.current) {
+          modalRef.current.focus();
+        }
+      }, 0);
+    } else {
+      if (lastActiveElementRef.current && lastActiveElementRef.current.focus) {
+        lastActiveElementRef.current.focus();
+      }
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape' && isVisible) {
+        toggleModal();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isVisible, toggleModal]);
+
+  if (!isVisible) return null
+
+  return (
+    <div className='modal-backdrop'>
+      <div
+        className='modal'
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby='modal-title' 
+        tabIndex='-1'
+        ref={modalRef}
+      >
+        {children}
+        <BtnClose onClick={toggleModal} />
+      </div>
+    </div>
+  )
+}
+
+ModalWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+}
+
+export default ModalWrapper
+</file>
+
+<file path="src/components/Navbar.jsx">
+import { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import '../css/Navbar.css';
+import logo from '../assets/logo.png';
+
+const Navbar = ({ onNew, onExport, onSave, onLoad, onLogout }) => {
+  const [menuActive, setMenuActive] = useState(false);
+  const navbarRef = useRef(null);
+
+  const toggleMenu = () => {
+    setMenuActive(prev => !prev);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target) && menuActive) {
+        setMenuActive(false);
+      }
+    };
+    window.addEventListener('mouseup', handleClickOutside);
+    return () => window.removeEventListener('mouseup', handleClickOutside);
+  }, [menuActive]);
+
+  const handleAction = (action) => {
+    if (action) action();
+    setMenuActive(false);
+  };
+
+  return (
+    <nav className="navbar" ref={navbarRef}>
+      <div className="container">
+        <div className="navbar-header">
+          <button className="navbar-toggler" onClick={toggleMenu} aria-label="Toggle navigation">
+            <span /><span /><span />
+          </button>
+          <a href="#" onClick={(e) => { e.preventDefault(); handleAction(onNew); }} aria-label="Noted Home - New Document">
+            <img src={logo} alt="Noted Logo" />
+          </a>
+        </div>
+        <div className={`navbar-menu ${menuActive ? 'active' : ''}`}>
+          <ul className="navbar-nav">
+            <li><button onClick={() => handleAction(onNew)}>New</button></li>
+            <li><button onClick={() => handleAction(onSave)}>Save</button></li>
+            <li><button onClick={() => handleAction(onLoad)}>Load</button></li>
+            <li><button onClick={() => handleAction(onExport)}>Export</button></li>
+            <li><button onClick={() => handleAction(onLogout)}>Logout</button></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+Navbar.propTypes = {
+  onNew: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onLoad: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
+
+export default Navbar;
+</file>
+
+<file path="src/components/Redirect.jsx">
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
+const Redirect = ({ to }) => {
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate(to)
+  }, [to, navigate])
+
+  return null
+}
+
+Redirect.propTypes = {
+  to: PropTypes.string.isRequired
+}
+
+export default Redirect
+</file>
+
+<file path="src/components/Register.jsx">
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import '../css/Login.css'
+import '../css/Register.css'
+import '../css/LandingPage.css'
+import '../css/fonts.css'
+
+const Register = ({ closeModal, switchToLogin }) => {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleRegister = async e => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    if (!email || !password || !confirmPassword) {
+      setError('Please fill out all fields.')
+      setLoading(false)
+      return
+    }
+
+    if (confirmPassword !== password) {
+      setError('Passwords do not match.')
+      setLoading(false)
+      return
+    } 
+
+    try {
+      const auth = getAuth()
+      await createUserWithEmailAndPassword(auth, email, password)
+      navigate('/dashboard')
+      closeModal()
+    } catch (firebaseError) {
+      console.error('Error during registration:', firebaseError)
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      switch (firebaseError.code) {
+        case 'auth/email-already-in-use':
+          errorMessage = 'This email address is already in use.';
+          break;
+        case 'auth/invalid-email':
+          errorMessage = 'The email address is not valid.';
+          break;
+        case 'auth/operation-not-allowed':
+          errorMessage = 'Email/password accounts are not enabled. Please contact support.';
+          break;
+        case 'auth/weak-password':
+          errorMessage = 'Password is too weak. It should be at least 6 characters.';
+          break;
+        default:
+          errorMessage = 'Registration failed. Please try again.';
+          break;
+      }
+      setError(errorMessage)
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div>
+      <h2>Register</h2>
+      <form onSubmit={handleRegister}>
+        {error && <div className='error-message'>{error}</div>}
+        <div className='text-email'>
+          <input
+            type='email'
+            placeholder='Email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+        </div>
+        <div className='text-password'>
+          <input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </div>
+          <div className='text-confirm-password'>
+          <input
+            type='password'
+            placeholder='Confirm Password'
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <button type='submit' className='btn-submit' disabled={loading}>
+          {loading ? 'Loading...' : 'Submit'}
+        </button>
+      </form>
+      <div className='modal-footer'>
+        <p>
+         Already have an account?{' '} Return to 
+          <button className='btn-register' onClick={switchToLogin}>
+            Login
+          </button>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+Register.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  switchToLogin: PropTypes.func.isRequired
+}
+
+export default Register
+</file>
+
+<file path="src/css/AlertModal.css">
+.alert-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-backdrop);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2500;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.alert-modal {
+  background-color: var(--color-dark-bg-3);
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+  color: var(--color-light-text-2);
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  animation: slideUpModal 0.4s ease-out;
+  border-top: 4px solid var(--color-border-default);
+  outline: none;
+}
+
+.alert-modal h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: var(--color-light-text-3);
+}
+
+.alert-modal p {
+  margin-bottom: 20px;
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+.alert-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.alert-modal .btn-close-alert,
+.alert-modal .btn-confirm {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent;
+  min-width: 100px;
+}
+
+.alert-modal .btn-close-alert {
+  background-color: var(--color-grey-dark-1);
+  color: var(--color-medium-text-1);
+  border-color: var(--color-grey-dark-2);
+}
+.alert-modal .btn-close-alert:hover {
+  background-color: var(--color-grey-dark-2);
+  border-color: var(--color-grey-dark-3);
+}
+
+.alert-modal .btn-confirm {
+  background-color: var(--color-accent-blue-2);
+  color: var(--color-primary-bg);
+}
+.alert-modal .btn-confirm:hover {
+  background-color: var(--color-accent-blue-3);
+}
+
+.alert-modal-success { border-top-color: var(--color-accent-green); }
+.alert-modal-success h2 { color: var(--color-accent-green); }
+
+.alert-modal-error { border-top-color: var(--color-accent-red); }
+.alert-modal-error h2 { color: var(--color-accent-red); }
+
+.alert-modal-info { border-top-color: var(--color-accent-blue-2); }
+.alert-modal-info h2 { color: var(--color-accent-blue-2); }
+
+.alert-modal-warning { border-top-color: var(--color-accent-yellow); }
+.alert-modal-warning h2 { color: var(--color-accent-yellow); }
+
+.alert-modal-loading p::after {
+  content: "...";
+  display: inline-block;
+  animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+  0%, 20% { content: "."; }
+  40% { content: ".."; }
+  60%, 100% { content: "..."; }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUpModal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</file>
+
+<file path="src/css/App.css">
+/* App.css */
+
+@import url('./fonts.css');
+
+:root {
+  /* Colors */
+  --color-primary-bg: #000;
+  --color-dark-bg-1: #0A0A0A; /* Editor container */
+  --color-dark-bg-2: #1a1a1a; /* Load modal */
+  --color-dark-bg-3: #1e1e1e; /* Alert modal, exported HTML */
+  --color-dark-bg-4: #181818; /* Editor menu bar */
+  --color-dark-bg-5: #101010; /* Document title bar */
+  --color-backdrop: rgba(0, 0, 0, 0.6);
+  --color-backdrop-modal: rgba(0, 19, 27, 0.24);
+
+  --color-light-text-1: #fff;
+  --color-light-text-2: #e0e0e0;
+  --color-light-text-3: #f0f0f0;
+  --color-medium-text-1: #ccc;
+  --color-medium-text-2: #b0b0b0;
+  --color-medium-text-3: #888;
+  --color-medium-text-4: #aaa;
+  --color-placeholder: #6c757d;
+
+  --color-accent-blue-1: rgb(0, 225, 255);
+  --color-accent-blue-2: rgba(50, 200, 255, 0.9);
+  --color-accent-blue-3: rgba(50, 200, 255, 1);
+  --color-accent-blue-4: rgba(50, 200, 255, 0.3);
+  --color-accent-blue-5: rgba(50, 200, 255, 0.7);
+  --color-accent-green: #51cf66;
+  --color-accent-red: #ff6b6b;
+  --color-accent-yellow: #fcc419;
+
+  --color-link: rgba(50, 200, 255, 1);
+  --color-btn-x: rgb(0, 255, 200);
+  --color-btn-x-border: rgb(7, 218, 255);
+  --color-btn-x-hover-text: rgb(255, 255, 255);
+  --color-btn-x-hover-bg: rgb(145, 0, 60);
+
+  --color-btn-hero-text: rgb(255, 190, 215);
+  --color-btn-hero-border: rgba(47, 0, 216, 0.438);
+  --color-btn-hero-text-hover: #ffffff73;
+  --color-btn-hero-shadow-1: rgba(0, 10, 56, 0.8);
+  --color-btn-hero-shadow-2: rgba(156, 174, 255, 0.8);
+  --color-btn-hero-shadow-3: rgba(255, 255, 255, 0.7);
+  --color-btn-hero-shadow-4: rgb(1, 74, 87);
+  --color-btn-hero-shadow-5: rgb(111, 0, 255);
+  --color-btn-hero-shadow-6: #000;
+
+  --color-btn-submit-text: rgb(0, 255, 255);
+  --color-btn-submit-border: rgb(0, 247, 255);
+  --color-btn-submit-hover-text: rgb(255, 255, 255);
+  --color-btn-submit-hover-bg: rgb(124, 0, 52);
+  --color-btn-submit-hover-shadow: rgba(255, 255, 255, 0.829);
+
+  --color-register-text: rgba(84, 255, 235, 0.781);
+  --color-register-btn: rgb(0, 162, 255);
+  --color-register-btn-hover: rgb(255, 0, 128);
+
+  /* Grey shades for modals and borders */
+  --color-grey-dark-1: #444;
+  --color-grey-dark-2: #555;
+  --color-grey-dark-3: #666;
+  --color-grey-dark-4: #333;
+  --color-grey-dark-5: #282828;
+  --color-grey-dark-6: #2c2c2c;
+  --color-grey-dark-7: #111;
+  --color-grey-dark-8: #2a2a2a;
+  --color-border-default: #555;
+  --color-footer-bg: rgba(10, 10, 10, 0.85);
+
+  /* Dimensions */
+  --navbar-height-desktop: 50px;
+  --navbar-height-mobile: 45px;
+  --titlebar-height-desktop: 45px;
+  --titlebar-height-mobile: 40px;
+}
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-primary-bg);
+  color: var(--color-light-text-2);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+</file>
+
+<file path="src/css/Banner.css">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', 'Arial', sans-serif;
+}
+
+.banner-container {
+  width: 100%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.banner img, .banner h1 {
+  height: 16px;
+  width: auto;
+  justify-self: start;
+  margin-left: 20px;
+}
+
+.banner ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  justify-self: end;
+  
+}
+
+.nav-item a {
+  color: #000;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.3s ease-out;
+}
+
+.nav-item a:hover {
+  color: #3498db;
+}
+</file>
+
+<file path="src/css/BtnClose.css">
+/* BtnClose.css */
+
+.btn-x {
+    font-family: Roboto, Helvetica, Arial sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    width: 20px;
+    top: 7%;
+    left: 91%;
+    background: none;
+    color: rgb(0, 255, 200);
+    font-size: 0.6em;
+    margin: -10px;
+    border-color: rgb(7, 218, 255);
+    border: 1px solid;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.btn-x:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(145, 0, 60);
+}
+</file>
+
+<file path="src/css/BtnLogout.css">
+.btn-logout {
+    font-family: Guild, Helvetica, Arial, sans-serif;
+    background-color: transparent;
+    color: var(--color-btn-hero-text);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-shadow: 
+        1px 1px 5px var(--color-btn-hero-shadow-1), 
+        0 0 10px var(--color-btn-hero-shadow-2), 
+        0px 0 20px var(--color-btn-hero-shadow-3), 
+        0px 2px 10px var(--color-btn-hero-shadow-4), 
+        0px -2px 2px var(--color-btn-hero-shadow-5), 
+        0 0 10px var(--color-btn-hero-shadow-6);
+    text-align: center;
+    justify-content: center;
+    font-size: 4em;
+    font-weight: 400;
+    min-width: 15%;
+    width: auto;
+    box-shadow: 0 2px 5px var(--color-primary-bg);
+    transition: color 0.3s ease, border 0.3s ease, border-color 0.3s ease, text-shadow 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-logout:hover,
+.btn-logout:focus {
+    color: var(--color-btn-hero-text-hover);
+    background-color: rgba(6, 8, 104, 0);
+    border: 0px solid;
+    text-shadow: 0 0 5px var(--color-light-text-1), 0 0 10px #b700ff, 0 0 10px var(--color-light-text-1);
+    box-shadow: 0 0 20px #7700ffab, 0 0 10px #a605ac8e;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+    .btn-logout {
+        width: auto;
+        min-width: 40%;
+        font-size: 2em;
+        display: inline;
+    }
+}
+</file>
+
+<file path="src/css/BtnMain.css">
+/* BtnMain.css */
+
+.btn-container {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    left: 0;
+    margin-top: 55vh;
+    background-color: rgba(51, 0, 56, 0.295);
+    border: 1px solid var(--color-btn-hero-border);
+    overflow: hidden;
+}
+
+.btn-hero {
+    font-family: Guild, Helvetica, Arial, sans-serif;
+    background-color: transparent;
+    color: var(--color-btn-hero-text);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-shadow: 
+        1px 1px 5px var(--color-btn-hero-shadow-1), 
+        0 0 10px var(--color-btn-hero-shadow-2), 
+        0px 0 20px var(--color-btn-hero-shadow-3), 
+        0px 2px 10px var(--color-btn-hero-shadow-4), 
+        0px -2px 2px var(--color-btn-hero-shadow-5), 
+        0 0 10px var(--color-btn-hero-shadow-6);
+    text-align: center;
+    justify-content: center;
+    font-size: 2.5em;
+    font-weight: 400;
+    min-width: 15%;
+    width: auto;
+    box-shadow: 0 2px 5px var(--color-primary-bg);
+    transition: color 0.3s ease, border 0.3s ease, border-color 0.3s ease, text-shadow 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-hero:hover,
+.btn-hero:focus {
+    color: var(--color-btn-hero-text-hover);
+    background-color: rgba(6, 8, 104, 0);
+    border: 0px solid;
+    text-shadow: 0 0 5px var(--color-light-text-1), 0 0 10px #b700ff, 0 0 10px var(--color-light-text-1);
+    box-shadow: 0 0 20px #7700ffab, 0 0 10px #a605ac8e;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+    .btn-hero {
+        width: auto;
+        min-width: 40%;
+        font-size: 2em;
+        display: inline;
+    }
+
+    .btn-container {
+        margin-top: 55vh;
+    }
+}
+</file>
+
+<file path="src/css/Copyright.css">
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-footer-bg);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 6px 0;
+    z-index: 950;
+    box-shadow: 0 -1px 4px rgba(50, 150, 200, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright {
+    width: auto;
+    max-width: 95%;
+    padding: 0 10px;
+    margin: 0;
+    opacity: 0.85;
+    text-align: center;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 300;
+    color: var(--color-medium-text-2);
+    font-size: 0.75rem;
+    line-height: 1.3;
+}
+
+.copyright p {
+    margin: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .footer {
+        padding: 5px 0;
+    }
+    .copyright {
+        font-size: 0.7rem;
+    }
+}
+</file>
+
+<file path="src/css/Editor.css">
+/* Editor.css */
+
+/* General Editor Container */
+.editor-container-tiptap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-dark-bg-1);
+  border: 1px solid var(--color-accent-blue-4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Menu Bar Styling */
+.editor-menu-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 10px;
+  background-color: var(--color-dark-bg-4);
+  border-bottom: 1px solid rgba(50, 200, 255, 0.4);
+  gap: 5px;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 5px;
+  border-right: 1px solid var(--color-grey-dark-4);
+}
+.toolbar-group:last-child {
+  border-right: none;
+}
+
+
+.menu-button {
+  background: transparent;
+  border: none;
+  color: var(--color-medium-text-1);
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+}
+
+.menu-button:hover {
+  background-color: var(--color-grey-dark-4);
+  color: var(--color-light-text-1);
+}
+
+.menu-button.is-active {
+  background-color: var(--color-accent-blue-4);
+  color: var(--color-accent-blue-3);
+}
+.menu-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toolbar-select {
+  background-color: var(--color-grey-dark-6);
+  color: var(--color-light-text-2);
+  border: 1px solid var(--color-grey-dark-1);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  outline: none;
+  cursor: pointer;
+  max-width: 150px;
+}
+.toolbar-select.font-size-select {
+    max-width: 80px;
+}
+
+
+.toolbar-select:hover {
+  border-color: var(--color-accent-blue-5);
+}
+
+.toolbar-color-picker {
+  width: 28px;
+  height: 28px;
+  border: none;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.toolbar-color-picker::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+.toolbar-color-picker::-webkit-color-swatch {
+  border: 1px solid var(--color-grey-dark-2);
+  border-radius: 3px;
+}
+.toolbar-color-picker::-moz-color-swatch {
+  border: 1px solid var(--color-grey-dark-2);
+  border-radius: 3px;
+}
+
+.toolbar-label {
+    color: var(--color-medium-text-1);
+    padding: 6px 2px 6px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.toolbar-label:hover {
+    color: var(--color-light-text-1);
+}
+
+
+/* TipTap Editor Content Area */
+.editor-content-area {
+  flex-grow: 1;
+  padding: 15px 20px;
+  overflow-y: auto;
+  color: var(--color-light-text-2);
+  line-height: 1.7;
+}
+
+/* Basic ProseMirror/TipTap styling (can be customized further) */
+.ProseMirror {
+  outline: none;
+  min-height: 150px;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-placeholder);
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3, .ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
+  color: var(--color-light-text-3);
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  line-height: 1.3;
+}
+.ProseMirror h1 { font-size: 2em; }
+.ProseMirror h2 { font-size: 1.75em; }
+.ProseMirror h3 { font-size: 1.5em; }
+
+.ProseMirror a {
+  color: var(--color-link);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ProseMirror code {
+  background-color: rgba(100, 100, 100, 0.2);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.ProseMirror pre {
+  background: var(--color-grey-dark-7);
+  color: var(--color-medium-text-1);
+  font-family: 'Roboto Mono', monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  white-space: pre-wrap;
+}
+.ProseMirror pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.9em;
+}
+
+.ProseMirror blockquote {
+  border-left: 3px solid rgba(50, 200, 255, 0.5);
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1rem;
+  color: var(--color-medium-text-4);
+}
+
+.ProseMirror ul, .ProseMirror ol {
+  padding-left: 1.5rem;
+}
+
+.ProseMirror mark {
+  background-color: yellow;
+  color: inherit;
+}
+
+/* Responsive Toolbar */
+@media (max-width: 768px) {
+  .editor-menu-bar {
+    padding: 6px;
+    gap: 3px;
+  }
+  .toolbar-group {
+    padding: 0 3px;
+    gap: 2px;
+  }
+  .menu-button {
+    padding: 5px 6px;
+    font-size: 1em;
+  }
+  .toolbar-select {
+    padding: 5px 6px;
+    font-size: 0.8em;
+  }
+  .toolbar-select.font-size-select {
+    max-width: 70px;
+  }
+  .editor-content-area {
+    padding: 10px 15px;
+  }
+}
+</file>
+
+<file path="src/css/EditorPage.css">
+/* EditorPage.css */
+
+@import url('../css/fonts.css');
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background: var(--color-primary-bg);
+  color: var(--color-light-text-1);
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Poppins', sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.editor-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-primary-bg);
+  color: var(--color-light-text-1);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  flex-grow: 1;
+}
+
+.editor-page > .banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--navbar-height-desktop);
+  z-index: 1000;
+  background-color: var(--color-primary-bg);
+}
+
+.document-title-bar {
+  position: fixed;
+  top: var(--navbar-height-desktop);
+  left: 0;
+  width: 100%;
+  background-color: var(--color-dark-bg-5);
+  padding: 8px 5%;
+  box-sizing: border-box;
+  z-index: 999;
+  border-bottom: 1px solid var(--color-grey-dark-5);
+  height: var(--titlebar-height-desktop);
+  display: flex;
+  align-items: center;
+}
+
+.document-title-input-field {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: var(--color-light-text-2);
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 6px 2px;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+}
+.document-title-input-field:focus {
+
+}
+
+
+.editor-page > .content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  padding-top: calc(var(--navbar-height-desktop) + var(--titlebar-height-desktop) + 20px);
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.editor-page > .footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #080808;
+  padding: 0;
+  z-index: 900;
+}
+
+@media screen and (max-width: 768px) {
+  .editor-page > .banner {
+    height: var(--navbar-height-mobile);
+  }
+  .document-title-bar {
+    top: var(--navbar-height-mobile);
+    padding: 6px 3%;
+    height: var(--titlebar-height-mobile);
+  }
+  .document-title-input-field {
+    font-size: 1.1em;
+  }
+  .editor-page > .content {
+    padding-top: calc(var(--navbar-height-mobile) + var(--titlebar-height-mobile) + 15px);
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+   .editor-page > .banner {
+    height: var(--navbar-height-mobile);
+  }
+   .document-title-bar {
+    top: var(--navbar-height-mobile);
+    padding: 5px 10px;
+    height: var(--titlebar-height-mobile);
+  }
+  .document-title-input-field {
+    font-size: 1em;
+  }
+  .editor-page > .content {
+    padding-top: calc(var(--navbar-height-mobile) + var(--titlebar-height-mobile) + 15px);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 15px;
+  }
+}
+</file>
+
+<file path="src/css/fonts.css">
+/* fonts.css */
+
+/* Cervanttis */
+@font-face {
+  font-family: 'Cervanttis';
+  src: local('Cervanttis'), url('../assets/fonts/Cervanttis.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Guild of Professional Actors */
+@font-face {
+  font-family: 'Guild';
+  src: local('guildof'), url('../assets/fonts/guildof.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normsl;
+}
+
+/* Roboto */
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto'), url('../assets/fonts/Roboto.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normsl;
+}
+</file>
+
+<file path="src/css/LandingPage.css">
+/* LandingPage.css  */
+
+.landing-page-container {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    overflow: hidden;
+}
+.video-background-container {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: -9;
+}
+
+.bgVid {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	transform: translate(-50%,-50%);
+    object-fit: cover;
+}
+
+
+.header {
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: white;
+    z-index: 1;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero img.logo {
+	display: block;
+	height: auto;
+	margin: 0 auto 30px auto;
+	padding: 0;
+	width: auto;
+	max-width: 700px;
+	min-width: 300px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-back-box {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 20px;
+	padding: 20px;
+	justify-content: center;
+	text-align: center;
+	z-index: 2;
+}
+
+.btn-back {
+	position: absolute;
+	margin-top: 100%;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+	font-size: 0.8em;
+	color: rgba(0, 119, 255, 0.363);
+	border: none;
+	background: none;
+	bottom: 0;
+	transition: color 0.3s ease;
+}
+
+.btn-back:hover {
+	color: rgb(222, 255, 255);
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+@media screen and (max-width: 700px) {
+	.hero img.logo {
+		max-width: 90%;
+		min-width: 250px;
+	}
+}
+</file>
+
+<file path="src/css/LoadingSpinner.css">
+.loading-spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.loading-spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: var(--color-light-text-1);
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid var(--color-accent-blue-3);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</file>
+
+<file path="src/css/LoadModal.css">
+.load-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-backdrop);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.load-modal {
+  background-color: var(--color-dark-bg-2);
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  color: var(--color-light-text-2);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUpModal 0.4s ease-out;
+  outline: none;
+}
+
+.load-modal h2 {
+  text-align: center;
+  color: var(--color-accent-blue-2);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+.load-modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.load-modal li {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--color-grey-dark-4);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.load-modal li:last-child {
+  border-bottom: none;
+}
+
+.load-modal li:hover {
+  background-color: var(--color-grey-dark-5);
+}
+
+.load-modal .doc-title {
+  flex-grow: 1;
+}
+.load-modal .doc-title:hover {
+  color: var(--color-accent-blue-3);
+}
+
+
+.load-modal .doc-date {
+  font-size: 0.8em;
+  color: var(--color-medium-text-3);
+  margin-left: 10px;
+}
+
+.load-modal .delete-doc-btn {
+  background-color: transparent;
+  color: var(--color-accent-red);
+  border: 1px solid var(--color-accent-red);
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-left: 15px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.load-modal .delete-doc-btn:hover {
+  background-color: var(--color-accent-red);
+  color: var(--color-dark-bg-2);
+}
+
+
+.load-modal .btn-close-modal {
+  background-color: var(--color-grey-dark-4);
+  color: var(--color-light-text-2);
+  border: 1px solid var(--color-grey-dark-2);
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 15px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.load-modal .btn-close-modal:hover {
+  background-color: var(--color-grey-dark-1);
+  border-color: #777;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .load-modal {
+    padding: 20px;
+  }
+  .load-modal h2 {
+    font-size: 1.5em;
+  }
+  .load-modal li {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+  .load-modal .delete-doc-btn {
+    padding: 4px 8px;
+    font-size: 0.75em;
+  }
+}
+</file>
+
+<file path="src/css/Login.css">
+/* Login.css */
+
+@media screen and (max-width: 600) {
+    .modal {
+        max-height:33%;
+        max-width: 90%;
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-backdrop-modal);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+.modal {
+    position: static;
+    background-color: rgba(0, 19, 27, 0.24);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid;
+    border-color: var(--color-accent-blue-1);
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 96, 160, 0.829);
+    animation: slideUp 0.5s ease-out;
+    color: var(--color-light-text-1);
+    max-width: 600px;
+    min-width:400px;
+    max-height: 350px;
+    min-height: 350px;
+    outline: none;
+}
+
+h2 {
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 5em;
+    font-weight: 300;
+    color: var(--color-light-text-1);
+}
+
+.modal input {
+    font-family: Roboto, Helvetica, sans-serif;
+    color: var(--color-light-text-1);
+    background: none;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid;
+    border-color: rgb(6, 221, 228);
+    font-size: 1.5em;
+    justify-content: center;
+    text-align: left;
+    margin: 5px;
+    padding: 2px;
+    width: 95%;
+}
+
+.modal input:focus {
+    background: var(--color-light-text-1);
+    color: var(--color-primary-bg);
+    border: none;
+}
+
+.btn-submit {
+    color: var(--color-btn-submit-text);
+    background: none;
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: var(--color-btn-submit-border);
+    margin: 10px;
+    margin-top: 5%;
+    padding: 10px;
+    font-size: 1.2em;
+    font-family: Roboto, Helvetica, sans-serif;
+    transition: color 0.3s ease, background 0.3s ease,
+        text-shadow 0.3s ease;
+}
+
+.btn-submit:hover,
+.btn-submit:focus {
+    color: var(--color-btn-submit-hover-text);
+    background-color: var(--color-btn-submit-hover-bg);
+    text-shadow: 0 0 10px var(--color-btn-submit-hover-shadow);
+}
+
+.login-socials {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.google,
+.fb {
+    padding: 0px;
+    margin: 0px;
+    width: 30%;
+    background: none;
+    border: none;
+    border-color: var(--color-light-text-1);
+}
+
+.error-message {
+    color: var(--color-accent-red);
+    font-size: 1em;
+    
+}
+
+.success-message {
+    color: rgb(9, 255, 0);
+    font-size: 1em;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+</file>
+
+<file path="src/css/Navbar.css">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.925rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar .container {
+  width: 100%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.navbar,
+.navbar > .container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+  .navbar,
+  .navbar > .container {
+    display: block;
+  }
+   .navbar > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.navbar {
+  background-color: var(--color-primary-bg);
+  color: var(--color-light-text-1);
+  padding: 0.5rem 0;
+  border: none;
+  min-height: var(--navbar-height-desktop);
+}
+
+.navbar .navbar-header {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .navbar .navbar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    flex-grow: 1;
+  }
+}
+.navbar .navbar-header .navbar-toggler {
+  cursor: pointer;
+  border: none;
+  display: none;
+  outline: none;
+  background: transparent;
+  padding: 0.5rem;
+}
+@media (max-width: 768px) {
+  .navbar .navbar-header .navbar-toggler {
+    display: block;
+  }
+}
+.navbar .navbar-header .navbar-toggler span {
+  height: 2px;
+  width: 22px;
+  background-color: var(--color-light-text-1);
+  display: block;
+  border-radius: 1px;
+}
+.navbar .navbar-header .navbar-toggler span:not(:last-child) {
+  margin-bottom: 0.3rem;
+}
+.navbar .navbar-header > a {
+  font-weight: 500;
+  color: var(--color-light-text-1);
+  display: flex;
+  align-items: center;
+}
+
+.navbar .navbar-menu {
+  display: flex;
+  align-items: center;
+  flex-basis: auto;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+@media (max-width: 768px) {
+  .navbar .navbar-menu {
+    display: none;
+    text-align: left;
+    width: 100%;
+    background-color: var(--color-grey-dark-7);
+    position: absolute;
+    top: var(--navbar-height-mobile);
+    left: 0;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+}
+.navbar .navbar-menu.active {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+}
+.navbar .navbar-menu .navbar-nav {
+  flex-direction: row;
+  display: flex;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+@media (max-width: 768px) {
+  .navbar .navbar-menu .navbar-nav {
+    width: 100%;
+    display: block;
+    margin-top: 0;
+  }
+}
+.navbar .navbar-menu .navbar-nav > li > button {
+  background: none;
+  border: none;
+  color: var(--color-medium-text-1);
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: inline-block;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.navbar .navbar-menu .navbar-nav > li > button:hover,
+.navbar .navbar-menu .navbar-nav > li > button:focus {
+  color: var(--color-light-text-1);
+  background-color: #222;
+}
+@media (max-width: 768px) {
+  .navbar .navbar-menu .navbar-nav > li > button {
+    border-bottom: 1px solid var(--color-grey-dark-8);
+    display: block;
+    padding: 0.9rem 1rem;
+  }
+  .navbar .navbar-menu .navbar-nav > li:last-child > button {
+    border-bottom: none;
+  }
+   .navbar .navbar-menu .navbar-nav > li > button:hover,
+   .navbar .navbar-menu .navbar-nav > li > button:focus {
+      background-color: var(--color-accent-blue-4);
+   }
+}
+.navbar .navbar-menu .navbar-nav > li.active button {
+  color: var(--color-accent-blue-3);
+  font-weight: 500;
+}
+
+.navbar .navbar-menu .navbar-nav .navbar-dropdown {
+  position: relative;
+}
+.navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown {
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--color-grey-dark-7);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  min-width: 200px;
+  width: auto;
+  white-space: nowrap;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+  z-index: 10000;
+  border-radius: 0 0 0.5rem 0.5rem;
+  display: none;
+  border: 1px solid var(--color-grey-dark-8);
+}
+@media (max-width: 768px) {
+  .navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown {
+    position: static;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+    padding-left: 1rem;
+    border-radius: 0;
+  }
+}
+.navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown li a {
+  color: #bbb;
+  padding: 0.5rem 1.2rem;
+  display: block;
+}
+.navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown li a:hover,
+.navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown li a:focus {
+  background-color: #222;
+  color: var(--color-light-text-1);
+}
+.navbar .navbar-menu .navbar-nav .navbar-dropdown .dropdown.show {
+  display: block !important;
+}
+.navbar .navbar-menu .navbar-nav .dropdown > .separator {
+  height: 1px;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--color-grey-dark-4);
+}
+
+.navbar .navbar-header > a span {
+  color: #66f;
+}
+.navbar .navbar-header img {
+  width: 220px;
+  height: auto;
+  display: block;
+  padding: 5px 0;
+}
+
+@media (max-width: 992px) {
+    .navbar .navbar-header img {
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+  .navbar .navbar-header img {
+    width: 180px;
+    padding: 5px 0;
+    min-height: calc(var(--navbar-height-mobile) - 10px);
+  }
+}
+@media (max-width: 480px) {
+  .navbar .navbar-header img {
+    width: 150px;
+    padding: 5px 0;
+  }
+   .navbar .navbar-header .navbar-toggler {
+    padding: 0.4rem;
+  }
+}
+</file>
+
+<file path="src/css/Register.css">
+/* Register.css */
+
+.modal-footer {
+    font-size: 0.9em;
+    color: rgba(84, 255, 235, 0.781);
+}
+
+.modal-footer button {
+    font-style: none;
+    color: rgb(0, 162, 255);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    background: none;
+    font-style: none;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 1em;
+}
+
+.modal-footer button:hover,
+.modal-footer button:focus {
+    color: rgb(255, 0, 128);
+}
+
+
+
+/* .btn-register {
+    background: none;
+    font-style: none;
+    color: rgb(0, 255, 255);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 1em;
+} */
+</file>
+
+<file path="src/pages/EditorPage.jsx">
+// EditorPage.jsx
+
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
+import { db } from '../firebaseConfig';
+import { collection, addDoc, getDocs, query, where, serverTimestamp, doc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import Navbar from '../components/Navbar';
+import Copyright from '../components/Copyright';
+import Editor from '../components/Editor';
+import LoadModal from '../components/LoadModal';
+import AlertModal from '../components/AlertModal';
+import '../css/EditorPage.css';
+
+const EditorPage = () => {
+    const navigate = useNavigate();
+    const authInstance = getAuth();
+    const editorRef = useRef(null);
+    
+    const [currentDocumentId, setCurrentDocumentId] = useState(null);
+    const [documentTitleInput, setDocumentTitleInput] = useState("Untitled Document");
+
+    const [isLoadModalVisible, setIsLoadModalVisible] = useState(false);
+    const [documentsList, setDocumentsList] = useState([]);
+    
+    const [alertState, setAlertState] = useState({ isVisible: false, title: '', message: '', type: 'info' });
+    const [isLoadingData, setIsLoadingData] = useState(false); 
+    const [isSaving, setIsSaving] = useState(false);
+
+    useEffect(() => {
+        if (editorRef.current && authInstance.currentUser) {
+            editorRef.current.resetEditor();
+        }
+        setDocumentTitleInput("Untitled Document");
+    }, [authInstance.currentUser]);
+
+
+    const showAlert = (title, message, type = 'info', duration = 3000, onConfirmCallback = null, confirmBtnText = null) => {
+        setAlertState({ isVisible: true, title, message, type, onConfirm: onConfirmCallback, confirmText: confirmBtnText });
+        if (type !== 'loading' && type !== 'warning' && duration) {
+            setTimeout(() => setAlertState(prev => ({ ...prev, isVisible: false })), duration);
+        }
+    };
+    const closeAlert = () => setAlertState(prev => ({ ...prev, isVisible: false }));
+
+    const handleNew = () => {
+        if (editorRef.current) editorRef.current.resetEditor();
+        setCurrentDocumentId(null);
+        setDocumentTitleInput("Untitled Document");
+    };
+
+    const handleTitleInputChange = (e) => {
+        setDocumentTitleInput(e.target.value);
+    };
+
+    const updateTitleInFirestore = useCallback(async (newTitle) => {
+        const user = authInstance.currentUser;
+        if (currentDocumentId && user && newTitle) {
+            try {
+                const docRef = doc(db, "documents", currentDocumentId);
+                await updateDoc(docRef, {
+                    title: newTitle,
+                    updatedAt: serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error updating title in Firestore: ", error);
+                showAlert("Error", "Failed to update document title in database.", "error");
+            }
+        }
+    }, [currentDocumentId, authInstance]);
+
+    const handleTitleInputBlur = () => {
+        const newTitle = documentTitleInput.trim() || "Untitled Document";
+        if (newTitle !== documentTitleInput) {
+            setDocumentTitleInput(newTitle);
+        }
+        if (currentDocumentId) {
+            updateTitleInFirestore(newTitle);
+        }
+    };
+
+    const handleSave = async () => {
+        const user = authInstance.currentUser;
+        if (!user || !editorRef.current || isSaving) return;
+        setIsSaving(true);
+        showAlert("Saving...", "Please wait.", "loading", 0); 
+        
+        const editorContentHTML = editorRef.current.getContentHTML();
+        const titleToSave = documentTitleInput.trim() || "Untitled Document";
+        
+        const docData = {
+            userId: user.uid,
+            title: titleToSave,
+            editorContent: editorContentHTML,
+            updatedAt: serverTimestamp(),
+        };
+
+        try {
+            if (currentDocumentId) {
+                await setDoc(doc(db, "documents", currentDocumentId), docData, { merge: true });
+            } else {
+                const docRef = await addDoc(collection(db, "documents"), {
+                    ...docData,
+                    createdAt: serverTimestamp(),
+                });
+                setCurrentDocumentId(docRef.id);
+            }
+            if (documentTitleInput !== titleToSave) setDocumentTitleInput(titleToSave);
+            showAlert("Success!", `Document "${titleToSave}" saved.`, "success");
+        } catch (error) {
+            console.error("Error saving document: ", error);
+            showAlert("Error", "Failed to save document.", "error");
+        } finally {
+            setIsSaving(false);
+            if (alertState.type === 'loading') closeAlert();
+        }
+    };
+    
+    const handleLoadClick = async () => {
+        const user = authInstance.currentUser;
+        if (!user) return;
+        setIsLoadingData(true);
+        showAlert("Loading Documents...", "Fetching your saved notes.", "loading", 0);
+        try {
+            const q = query(collection(db, "documents"), where("userId", "==", user.uid), where("title", "!=", null));
+            const querySnapshot = await getDocs(q);
+            const docs = querySnapshot.docs.map(d => ({ id: d.id, data: d.data() }));
+            setDocumentsList(docs.sort((a,b) => (b.data.updatedAt?.seconds || 0) - (a.data.updatedAt?.seconds || 0) ));
+            setIsLoadModalVisible(true);
+            closeAlert();
+        } catch (error) {
+            console.error("Error fetching documents: ", error);
+            showAlert("Error", "Failed to fetch documents.", "error");
+        } finally {
+            setIsLoadingData(false);
+        }
+    };
+
+    const handleSelectDocument = (data, id, title) => {
+        if (editorRef.current) {
+            editorRef.current.setContent(data.editorContent || '', 'html');
+        }
+        setCurrentDocumentId(id);
+        setDocumentTitleInput(title || "Untitled Document");
+        setIsLoadModalVisible(false);
+    };
+
+    const handleDeleteDocument = async (docIdToDelete) => {
+        const user = authInstance.currentUser;
+        if (!user || !docIdToDelete) return;
+        
+        showAlert(
+            "Confirm Deletion", 
+            `Are you sure you want to delete "${documentsList.find(d=>d.id === docIdToDelete)?.data.title || 'this document'}"? This cannot be undone.`,
+            "warning", 0,
+            async () => {
+                closeAlert();
+                setIsLoadingData(true);
+                showAlert("Deleting...", "Please wait.", "loading", 0);
+                try {
+                    await deleteDoc(doc(db, "documents", docIdToDelete));
+                    setDocumentsList(prevDocs => prevDocs.filter(d => d.id !== docIdToDelete));
+                    if (currentDocumentId === docIdToDelete) handleNew();
+                    showAlert("Success", "Document deleted.", "success");
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                    showAlert("Error", "Failed to delete document.", "error");
+                } finally {
+                    setIsLoadingData(false);
+                    if (alertState.type === 'loading') closeAlert();
+                }
+            },
+            "Delete"
+        );
+    };
+
+    const handleExport = () => {
+        if (editorRef.current) {
+            const editorContentHTML = editorRef.current.getContentHTML();
+            const htmlContent = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${documentTitleInput || "Exported Document"}</title><style>body { margin: 20px; background-color: #1e1e1e; color: #d4d4d4; font-family: 'Inter', sans-serif; } .ProseMirror {outline: none;} </style></head><body>${editorContentHTML}</body></html>`;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${(documentTitleInput || "document").replace(/[^a-z0-9]/gi, '_').toLowerCase()}.html`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await signOut(authInstance);
+        } catch (error) {
+            console.error('Error signing out:', error);
+            showAlert("Error", "Failed to sign out.", "error");
+        }
+    };
+
+    return (
+        <div className='editor-page'>
+            <AlertModal {...alertState} onClose={closeAlert} />
+            <div className='banner'>
+                <Navbar 
+                    onNew={handleNew}
+                    onExport={handleExport}
+                    onSave={handleSave}
+                    onLoad={handleLoadClick}
+                    onLogout={handleLogout}
+                />
+            </div>
+            <div className="document-title-bar">
+                <input 
+                    type="text" 
+                    className="document-title-input-field"
+                    value={documentTitleInput}
+                    onChange={handleTitleInputChange}
+                    onBlur={handleTitleInputBlur}
+                    placeholder="Untitled Document"
+                    disabled={isSaving || isLoadingData}
+                />
+            </div>
+            <section className='content'>
+                <Editor ref={editorRef} />
+            </section>
+            <footer className='footer'>
+                <Copyright />
+            </footer>
+            <LoadModal
+                isVisible={isLoadModalVisible}
+                onClose={() => setIsLoadModalVisible(false)}
+                documents={documentsList}
+                onSelectDocument={handleSelectDocument}
+                onDeleteDocument={handleDeleteDocument}
+            />
+        </div>
+    );
+};
+
+export default EditorPage;
+</file>
+
+<file path="src/pages/LandingPage.jsx">
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ModalWrapper from "../components/ModalWrapper";
+import Login from "../components/Login";
+import Register from "../components/Register";
+import BtnMain from "../components/BtnMain";
+import Copyright from "../components/Copyright";
+import logo from "../assets/logo.png";
+import videoPoster from "../assets/video_poster.jpg";
+import bgVid_mp4 from "../assets/bgVideo.mp4";
+import bgVid_webm from "../assets/bgVideo.webm";
+import "../css/LandingPage.css";
+import "../css/fonts.css";
+import "../css/Login.css";
+import "../css/Register.css";
+
+const LandingPage = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState("login");
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = () => setIsModalVisible(false);
+  const switchToRegister = () => setModalContent("register");
+  const switchToLogin = () => setModalContent("login");
+
+  return (
+    <div className="landing-page-container">
+   
+    <div className="video-background-container">
+        <video className="bgVid" poster={videoPoster} playsInline autoPlay muted loop preload="auto" aria-label="Abstract cosmic background animation">
+            <source src={bgVid_webm} type="video/webm" />
+            <source src={bgVid_mp4} type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <header className="header">
+        <section className="hero">
+            <img src={logo} className="logo" alt="Noted" />
+            <div className="btn-container">
+                <BtnMain onClick={openModal} />
+            </div>
+        </section>
+    </header>
+
+    <ModalWrapper
+        className="model-backdrop"
+        isVisible={isModalVisible}
+        toggleModal={closeModal}
+     >
+        {modalContent === "login" ? (
+             <Login
+                switchToRegister={switchToRegister}
+                closeModal={closeModal}
+              />
+         ) : (
+             <Register
+                switchToLogin={switchToLogin}
+                closeModal={closeModal}
+              />
+         )}
+    </ModalWrapper>
+
+    <Copyright />
+  </div>
+  );
+};
+
+export default LandingPage;
+</file>
+
+<file path="src/App.jsx">
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { auth } from './firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import LandingPage from './pages/LandingPage';
+import EditorPage from './pages/EditorPage';
+import LoadingSpinner from './components/LoadingSpinner';
+
+const App = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoadingAuth(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loadingAuth) {
+    return <LoadingSpinner message="Checking authentication status..." />;
+  }
+
+  return (
+    <div className='App'>
+      <Router>
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          
+          <Route 
+            path='/editor' 
+            element={currentUser ? <EditorPage /> : <Navigate to="/" replace />} 
+          />
+          
+          <Route 
+            path='/dashboard' 
+            element={currentUser ? <Dashboard /> : <Navigate to="/" replace />} 
+          />
+          
+          <Route path='*' element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+}
+
+export default App;
+</file>
+
+<file path="src/firebaseConfig.js">
+// firebaseConfig.js
+
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+export { auth, db };
+</file>
+
+<file path="src/main.jsx">
+// main.jsx
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './css/App.css';
+import './css/LandingPage.css'
+import './css/BtnMain.css'
+import './css/Copyright.css'
+import './css/fonts.css'
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div>Error: {this.state.error.message}</div>;
+    }
+    return this.props.children;
+  }
+}
+
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+
+root.render(
+  <ErrorBoundary>
+     <React.StrictMode>
+        <App />
+    </React.StrictMode>
+  </ErrorBoundary>
+);
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Noted: An AI-powered note-taking and organizational tool for enhanced productivity." />
+  <title>Noted: Rich Text Editor</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="preload" href="/src/assets/fonts/Roboto.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <link rel="preload" href="/src/assets/fonts/Cervanttis.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <link rel="preload" href="/src/assets/fonts/guildof.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100,0,0" />
+</head>
+<body>
+
+<div id="root"></div>
+<script type="module" src="/src/main.jsx"></script>
+
+</body>
+</html>
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [
+    react()
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  server: {
+    host: true,
+    port: 3002,
+    strictPort: false,
+    allowedHosts: ['all'],
+  },
+  build: {
+    sourcemap: true,
+    outDir: 'dist',
+    chunkSizeWarningLimit: 5000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+          }
+        },
+      },
+    },
+  }
+});
+</file>
+
+<file path=".gitignore">
+node_modules
+package-lock.json
+.env
+logs
+*.log
+.backups
+dist
+.templates
+.unused
+npm-debug.log*
+yarn.lock
+</file>
+
+<file path="package.json">
+{
+  "name": "noted",
+  "version": "4.0.0",
+  "author": "Alex Pariah",
+  "type": "module",
+  "scripts": {
+    "dev": "npx vite",
+    "deploy": "pnpm install && npx vite build"
+  },
+  "dependencies": {
+    "@tiptap/extension-color": "^2.12.0",
+    "@tiptap/extension-font-family": "^2.12.0",
+    "@tiptap/extension-highlight": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
+    "@tiptap/extension-placeholder": "^2.12.0",
+    "@tiptap/extension-text-align": "^2.12.0",
+    "@tiptap/extension-text-style": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "firebase": "^10.14.1",
+    "prop-types": "^15.8.1",
+    "quill": "^2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
+    "react-router": "^6.30.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.5.1",
+    "@vitejs/plugin-react-swc": "^3.10.1",
+    "eslint": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "eslint-plugin-react-refresh": "latest",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "vite": "^5.4.19"
+  },
+  "pnpm": {
+    "overrides": {
+      "glob": "^10.3.10",
+      "inflight": "^1.0.7",
+      "lodash.isequal": "4.5.0",
+      "rimraf": "^5.0.1"
+    },
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "postinstall-postinstall",
+      "protobufjs"
+    ]
+  }
+}
+</file>
+
+<file path="README.md">
+#### PROJECT SUMMARY
+
+# NOTED
+
+**NOTED** is an AI-powered note-taking and organizational tool designed to enhance your workflow, period.  Creative, technical, professional – your use-case is covered. Harness the power of cutting-edge artificial intelligence technology and watch your productivity skyrocket!
+
+## GOALS
+- Build and deploy a **working prototype** of a **full-stack, AI-powered** note-taking web-application to showcase the app’s **brand aesthetic** and **core functionality**.
+- **Integrate** with open-source large language model AI using **free or low-cost** APIs.
+- Lay a solid foundation  a **full-featured, robust, scalable** web-application in accordance with **modern best-practices** and **industry standards**.
+
+## TECH-STACK
+- **Frontend (UI/UX)**: React + Vite, CSS
+- **Backend (Server)**: Node.js + Express, NGINX (Production)
+
+## CORE FEATURES
+- **Record your ideas** by writing them down, recording your voice, or using speech-to-text.
+- Distraction-free, aesthetically pleasing, minimalist, and modern UI.
+- Format and style notes using Markdown or by using the intuitive, built-in rich-text editor.
+- Use AI to get organized by automatically generating layouts, templates, schedules, calendars, spread-sheets, budgets, or outlines.
+- Enhance your creativity with an AI that generates **plot/grammar/diction/formatting suggestions** in the margin and learns as you write, **evolving and adapting** to your specific workflow.
+- **Create, share, and download** templates from an online database.
+- **Synchronize** your notes on all devices using secure, encrypted cloud-storage.
+- After finishing your book, story, poem, or document, immediately **list it for sale as an e-book**, hardcover/paperback, or as an audiobook read aloud by an artificially generated voice.
+- **Attach images or videos** to notes, or embed websites using iframes.
+- Set notes as private, or allow others to access them and make their own changes for a collaborative effort.
+- Add **user-created plugins and modifications** for near-infinite expansion and functionality.
+
+## LICENSE
+**The MIT License (MIT)**
+Copyright © 2025 Alex Pariah
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+</file>
+
+</files>
